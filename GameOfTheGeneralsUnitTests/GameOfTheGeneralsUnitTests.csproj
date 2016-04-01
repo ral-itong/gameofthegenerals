@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ByteConversionTests.cs" />
     <Compile Include="MockObjects\AsyncResultMock.cs" />
     <Compile Include="BoardSyncingTest.cs" />
     <Compile Include="Examples\AsynchronousClientSocketExample.cs" />

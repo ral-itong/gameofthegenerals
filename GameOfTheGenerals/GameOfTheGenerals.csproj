@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BoardSyncer.cs" />
     <Compile Include="ClientListener.cs" />
+    <Compile Include="MessageUtils.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameOfTheGeneralsForm.cs">
       <SubType>Form</SubType>

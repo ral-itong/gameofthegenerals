@@ -55,6 +55,11 @@ namespace GameOfTheGeneralsUnitTests
             return new MockAsyncResult();
         }
 
+        public int EndReceive(IAsyncResult ar)
+        {
+            return 0;
+        }
+
         public Socket Socket
         {
             get
