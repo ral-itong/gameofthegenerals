@@ -36,17 +36,37 @@ namespace GameOfTheGenerals
         private byte _turnNumber;
         public const ushort HeaderConstant = 0xAAAA;
 
-        public byte[] ToByteArray()
+        public static byte[] ToByteArray(Header header)
         {
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
             writer.Write(HeaderConstant);
-            writer.Write(_messageLength);
-            writer.Write(Convert.ToByte(_messageOrigination));
-            writer.Write(Convert.ToByte(_messageType));
-            writer.Write(_turnNumber);
+            writer.Write(header.MessageLength);
+            writer.Write(Convert.ToByte(header.MessageOrigination));
+            writer.Write(Convert.ToByte(header.MessageType));
+            writer.Write(header.TurnNumber);
 
             return stream.ToArray();
+        }
+
+        public static Header Deserialize(byte[] byteArray)
+        {
+            Header header = new Header();
+            MemoryStream stream = new MemoryStream(byteArray);
+            BinaryReader reader = new BinaryReader(stream);
+
+            SkipHeaderConstant(reader);
+            header.MessageLength = reader.ReadByte();
+            header.MessageOrigination = (MessageOrigination)Enum.ToObject(typeof(MessageOrigination), reader.ReadByte());
+            header.MessageType = (MessageType)Enum.ToObject(typeof(MessageType), reader.ReadByte());
+            header.TurnNumber = reader.ReadByte();
+
+            return header;
+        }
+
+        private static void SkipHeaderConstant(BinaryReader reader)
+        {
+            reader.ReadBytes(2);
         }
 
         public MessageType MessageType
@@ -75,7 +95,7 @@ namespace GameOfTheGenerals
             }
         }
 
-        public MessageOrigination MessageOrigination1
+        public MessageOrigination MessageOrigination
         {
             get
             {

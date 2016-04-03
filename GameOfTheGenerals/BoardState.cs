@@ -20,7 +20,7 @@ namespace GameOfTheGenerals
             writer.Write(Convert.ToByte(_headerType));
             writer.Write(GetNumberOfPiecesInBoard());
             foreach (Piece piece in _pieces)
-                writer.Write(piece.ToByteArray());
+                writer.Write(Piece.ToByteArray(piece));
 
             return stream.ToArray();
         }

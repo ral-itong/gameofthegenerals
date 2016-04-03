@@ -14,8 +14,8 @@ namespace GameOfTheGeneralsUnitTests
             Piece piece = new Piece(Rank.BrigadierGeneral);
             piece.XCoordinate = 10;
             piece.YCoordinate = 10;
-            
-            piece.ToByteArray();
+
+            Piece.ToByteArray(piece);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace GameOfTheGeneralsUnitTests
             piece.YCoordinate = 12;
             piece.PieceOwner = PieceOwner.Client;
 
-            byte[] pieceByteArray = piece.ToByteArray();
+            byte[] pieceByteArray = Piece.ToByteArray(piece);
 
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);

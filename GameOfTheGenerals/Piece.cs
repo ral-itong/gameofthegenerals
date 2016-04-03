@@ -32,15 +32,15 @@ namespace GameOfTheGenerals
             return _rank > piece.Rank;
         }
 
-        public byte[] ToByteArray()
+        public static byte[] ToByteArray(Piece piece)
         {
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
 
-            writer.Write(Convert.ToByte(_xCoordinate));
-            writer.Write(Convert.ToByte(_yCoordinate));
-            writer.Write(Convert.ToByte(_pieceOwner));
-            writer.Write(Convert.ToByte(_rank));
+            writer.Write(piece.XCoordinate);
+            writer.Write(piece.YCoordinate);
+            writer.Write(Convert.ToByte(piece.PieceOwner));
+            writer.Write(Convert.ToByte(piece.Rank));
 
             return stream.ToArray();
 
