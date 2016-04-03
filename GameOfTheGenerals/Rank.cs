@@ -21,6 +21,7 @@ namespace GameOfTheGenerals
         LieutenantGeneral = 0x0B,
         General = 0x0C,
         GeneralOfTheArmy = 0x0D,
-        Spy = 0x0E
+        Spy = 0x0E,
+        Empty = 0xFF
     };
 }

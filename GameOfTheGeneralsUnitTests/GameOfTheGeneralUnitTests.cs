@@ -26,7 +26,7 @@ namespace GameOfTheGeneralsUnitTests
         [TestMethod()]
         public void ThereShouldBeAnEnumOfRanks()
         {
-            Assert.AreEqual(15, Enum.GetNames(typeof(Rank)).Length);
+            Assert.AreEqual(16, Enum.GetNames(typeof(Rank)).Length);
         }
 
 

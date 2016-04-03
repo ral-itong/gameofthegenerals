@@ -5,9 +5,10 @@ namespace GameOfTheGenerals
 {
     public class Piece
     {
-        private Rank _rank;
         private byte _xCoordinate;
         private byte _yCoordinate;
+        private PieceOwner _pieceOwner;
+        private Rank _rank;
 
 
         public Piece()
@@ -18,6 +19,31 @@ namespace GameOfTheGenerals
         public Piece(Rank rank)
         {
             this._rank = rank;
+        }
+
+        public bool CanEliminate(Piece piece)
+        {
+            if (_rank == Rank.Private && piece.Rank == Rank.Spy)
+                return true;
+            else if (_rank == Rank.Spy && piece.Rank == Rank.Private)
+                return false;
+
+
+            return _rank > piece.Rank;
+        }
+
+        public byte[] ToByteArray()
+        {
+            var stream = new MemoryStream();
+            var writer = new BinaryWriter(stream);
+
+            writer.Write(Convert.ToByte(_xCoordinate));
+            writer.Write(Convert.ToByte(_yCoordinate));
+            writer.Write(Convert.ToByte(_pieceOwner));
+            writer.Write(Convert.ToByte(_rank));
+
+            return stream.ToArray();
+
         }
 
         public Rank Rank
@@ -59,28 +85,19 @@ namespace GameOfTheGenerals
             }
         }
 
-        public bool CanEliminate(Piece piece)
+        public PieceOwner PieceOwner
         {
-            if (_rank == Rank.Private && piece.Rank == Rank.Spy)
-                return true;
-            else if (_rank == Rank.Spy && piece.Rank == Rank.Private)
-                return false;
+            get
+            {
+                return _pieceOwner;
+            }
 
-
-            return _rank > piece.Rank;
+            set
+            {
+                _pieceOwner = value;
+            }
         }
 
-        public byte[] ToArray()
-        {
-            var stream = new MemoryStream();
-            var writer = new BinaryWriter(stream);
 
-            writer.Write((byte)_rank);
-            writer.Write(this.XCoordinate);
-            writer.Write(this.YCoordinate);
-
-            return stream.ToArray();
-
-        }
     }
 }
