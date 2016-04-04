@@ -14,7 +14,6 @@ namespace GameOfTheGeneralsUnitTests
         [TestInitialize]
         public void InitTest()
         {
-            piece = new Piece();
             game = new Player();
         }
 
@@ -33,225 +32,228 @@ namespace GameOfTheGeneralsUnitTests
         [TestMethod()]
         public void PieceShouldHaveACanEliminateMethod()
         {
+            piece = GetPiece(Rank.Private);
             piece.CanEliminate(piece);
         }
 
         [TestMethod()]
         public void WhenAPrivateEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.Private;
+            piece = GetPiece(Rank.Private);
 
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
         }
+
+
 
         [TestMethod()]
         public void PrivateShouldEliminateASpy()
         {
-            piece.Rank = Rank.Private;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.Private);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void PrivateShouldBeAbleToEliminateAFlag()
         {
-            piece.Rank = Rank.Private;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.Private);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
 
         [TestMethod()]
         public void WhenASergeantEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.Sergeant;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
+            piece = GetPiece(Rank.Sergeant);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
         }
 
         [TestMethod()]
         public void ASergeantShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.Sergeant;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.Sergeant);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenASecondLieutenantEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.SecondLieutenant;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.SecondLieutenant);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void ASecondLieutenantShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.SecondLieutenant;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.SecondLieutenant);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
 
         [TestMethod()]
         public void WhenAFirstLieutenantEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.FirstLieutenant;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.FirstLieutenant);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AFirstLieutenantShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.FirstLieutenant;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.FirstLieutenant);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenACaptainEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.Captain;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.Captain);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void ACaptainShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.Captain;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.Captain);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenAMajorEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.Major;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.Major);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AMajorShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.Major;
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            piece = GetPiece(Rank.Major);
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenALieutenantColonelEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.LieutenantColonel;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.LieutenantColonel);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void ALieutenantColonelShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.LieutenantColonel;
+            piece = GetPiece(Rank.LieutenantColonel);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenAColonelEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.Colonel;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.Colonel);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AColonelShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.Colonel;
+            piece = GetPiece(Rank.Colonel);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
 
@@ -259,143 +261,148 @@ namespace GameOfTheGeneralsUnitTests
         [TestMethod()]
         public void WhenABrigadierGeneralEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.BrigadierGeneral;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.BrigadierGeneral);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void ABrigadierGeneralShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.BrigadierGeneral;
+            piece = GetPiece(Rank.BrigadierGeneral);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenAMajorGeneralEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.MajorGeneral;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.MajorGeneral);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AMajorGeneralShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.MajorGeneral;
+            piece = GetPiece(Rank.MajorGeneral);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenALieutenantGeneralEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.LieutenantGeneral;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.LieutenantGeneral);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void ALieutenantGeneralShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.LieutenantGeneral;
+            piece = GetPiece(Rank.LieutenantGeneral);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenAGeneralEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.General;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.GeneralOfTheArmy)));
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.General);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.GeneralOfTheArmy)));
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AGeneralShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.General;
+            piece = GetPiece(Rank.General);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod()]
         public void WhenAGeneralOfTheArmyEliminatesAPieceHigherThanItself_ItShouldReturnFalse()
         {
-            piece.Rank = Rank.General;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Spy)));
+            piece = GetPiece(Rank.General);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Spy)));
         }
 
         [TestMethod()]
         public void AGeneralOfTheArmyShouldBeAbleToEliminatePiecesLowerThanHimself()
         {
-            piece.Rank = Rank.GeneralOfTheArmy;
+            piece = GetPiece(Rank.GeneralOfTheArmy);
 
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.General)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.MajorGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.BrigadierGeneral)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Colonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.LieutenantColonel)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Major)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Captain)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.FirstLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.SecondLieutenant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Sergeant)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Private)));
-            Assert.AreEqual(true, piece.CanEliminate(new Piece(Rank.Flag)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.General)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.MajorGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.BrigadierGeneral)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Colonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.LieutenantColonel)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Major)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Captain)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.FirstLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.SecondLieutenant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Sergeant)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Private)));
+            Assert.AreEqual(true, piece.CanEliminate(GetPiece(Rank.Flag)));
         }
 
         [TestMethod]
         public void ASpyShouldNotBeAbleToEliminateAPrivate()
         {
-            piece.Rank = Rank.Spy;
-            Assert.AreEqual(false, piece.CanEliminate(new Piece(Rank.Private)));
+            piece = GetPiece(Rank.Spy);
+            Assert.AreEqual(false, piece.CanEliminate(GetPiece(Rank.Private)));
+        }
+
+        private static Piece GetPiece(Rank rank)
+        {
+            return new Piece(rank, PieceOwner.Client);
         }
 
         [TestMethod]

@@ -35,6 +35,7 @@ namespace GameOfTheGenerals
         private MessageOrigination _messageOrigination;
         private byte _turnNumber;
         public const ushort HeaderConstant = 0xAAAA;
+        public const byte SerialLength = 6;
 
         public static byte[] ToByteArray(Header header)
         {
