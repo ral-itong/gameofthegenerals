@@ -9,10 +9,10 @@ namespace GameOfTheGenerals
     public abstract class MessageWithBoard
     {
 
-        protected Piece[] _pieces;
-        protected MessageOrigination _messageOrigination;
-        protected byte _turnNumber;
-        protected MessageType _messageType;
+        private Piece[] _pieces;
+        private MessageOrigination _messageOrigination;
+        private byte _turnNumber;
+        private MessageType _messageType;
 
 
         public MessageWithBoard()
@@ -40,14 +40,24 @@ namespace GameOfTheGenerals
 
             header.MessageLength = total;
             header.MessageOrigination = _messageOrigination;
-            header.MessageType = _messageType;
+            header.MessageType = MessageType;
             header.TurnNumber = _turnNumber;
 
             return header;
         }
 
 
-        protected abstract byte GetTotalLengthOfMessage();
+        public abstract byte GetTotalLengthOfMessage();
+
+        protected byte GetLengthOfHeaderLengthOfPieceAndNumberOfPieces()
+        {
+            byte lengthOfPieces = Convert.ToByte(Piece.SerialLength * Pieces.Length);
+            byte lengthOfHeader = Header.SerialLength;
+            byte numOfPiecesInBoard = 1;
+
+            byte total = Convert.ToByte((lengthOfPieces + lengthOfHeader + numOfPiecesInBoard));
+            return total;
+        }
 
 
         public Piece[] Pieces
@@ -89,8 +99,17 @@ namespace GameOfTheGenerals
             }
         }
 
-  
+        protected MessageType MessageType
+        {
+            get
+            {
+                return _messageType;
+            }
 
-    
+            set
+            {
+                _messageType = value;
+            }
+        }
     }
 }

@@ -44,12 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardStateMessage.cs" />
-    <Compile Include="MessageWithBoard.cs" />
+    <Compile Include="Messages\BoardStateMessage.cs" />
+    <Compile Include="Messages\MessageOrigination.cs" />
+    <Compile Include="Messages\MessageType.cs" />
     <Compile Include="BoardSyncer.cs" />
     <Compile Include="ClientListener.cs" />
     <Compile Include="Header.cs" />
+    <Compile Include="Messages\MovePieceAckMessage.cs" />
+    <Compile Include="Messages\MovePieceResult.cs" />
     <Compile Include="MessageUtils.cs" />
+    <Compile Include="Messages\MessageWithBoard.cs" />
     <Compile Include="PieceOwner.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameOfTheGeneralsForm.cs">
@@ -63,8 +67,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank.cs" />
-    <Compile Include="ReadyMessage.cs" />
-    <Compile Include="SerializerDeserializer.cs" />
+    <Compile Include="Messages\ReadyMessage.cs" />
+    <Compile Include="Messages\SerializerDeserializer.cs" />
     <Compile Include="SocketAdapter.cs" />
     <Compile Include="StateObject.cs" />
     <EmbeddedResource Include="GameOfTheGeneralsForm.resx">

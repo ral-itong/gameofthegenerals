@@ -84,8 +84,7 @@ namespace GameOfTheGeneralsUnitTests
         [TestMethod]
         public void MessageLengthOfBoardState_ShouldEqualTheLengthOfSerializedBoardState()
         {
-            BoardStateMessage boardState = GetBoardState();
-
+            BoardStateMessage boardState = GetBoardStateMessage();
             byte[] result = BoardStateMessage.ToByteArray(boardState);
 
             MemoryStream stream = new MemoryStream(result);
@@ -94,14 +93,13 @@ namespace GameOfTheGeneralsUnitTests
             byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
             Header header = Header.Deserialize(headerBytes);
 
-
             Assert.AreEqual(result.Length, header.MessageLength);
         }
 
         [TestMethod]
-        public void BoardStateShouldBeDeserializedProperly()
+        public void WhenBoardStateIsDeserialized_TurnNumberAndPiecesShouldBeTheSame()
         {
-            BoardStateMessage boardState = GetBoardState();
+            BoardStateMessage boardState = GetBoardStateMessage();
             byte[] result = BoardStateMessage.ToByteArray(boardState);
 
             BoardStateMessage deserializedBoardState = BoardStateMessage.Deserialize(result);
@@ -112,12 +110,86 @@ namespace GameOfTheGeneralsUnitTests
             Assert.AreEqual(boardState.TurnNumber, deserializedBoardState.TurnNumber);
         }
 
+        [TestMethod]
+        public void MessageLengthOfReadyMessage_ShouldEqualLengthOfSerializedReadyMessage()
+        {
+            ReadyMessage boardState = GetReadyMessage();
+            byte[] result = BoardStateMessage.ToByteArray(boardState);
 
-        private static BoardStateMessage GetBoardState()
+            MemoryStream stream = new MemoryStream(result);
+            BinaryReader reader = new BinaryReader(stream);
+
+            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
+            Header header = Header.Deserialize(headerBytes);
+
+            Assert.AreEqual(result.Length, header.MessageLength);
+        }
+
+        [TestMethod]
+        public void ReadyMessageWhenSerialized_ShouldHaveReadyAsItsMessageType()
+        {
+            ReadyMessage boardState = GetReadyMessage();
+            byte[] result = BoardStateMessage.ToByteArray(boardState);
+
+            MemoryStream stream = new MemoryStream(result);
+            BinaryReader reader = new BinaryReader(stream);
+
+            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
+            Header header = Header.Deserialize(headerBytes);
+
+            Assert.AreEqual(MessageType.Ready, header.MessageType);
+        }
+
+        [TestMethod]
+        public void WhenMovePieceAckMessageIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            MovePieceAckMessage message = GetMovePieceAckMessage();
+            byte[] result = MovePieceAckMessage.Serialize(message);
+
+            MemoryStream stream = new MemoryStream(result);
+            BinaryReader reader = new BinaryReader(stream);
+
+            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
+            Header header = Header.Deserialize(headerBytes);
+
+            Assert.AreEqual(result.Length, header.MessageLength);
+        }
+
+
+
+        private MovePieceAckMessage GetMovePieceAckMessage()
+        {
+            MovePieceAckMessage message = new MovePieceAckMessage();
+            message.MessageOrigination = MessageOrigination.Client;
+            message.Pieces = GetPiecesArray();
+            message.Result = MovePieceResult.Sucessful;
+            message.TurnNumber = 22;
+
+            return message;
+        }
+
+        private static BoardStateMessage GetBoardStateMessage()
         {
             BoardStateMessage boardState = new BoardStateMessage();
             boardState.MessageOrigination = MessageOrigination.Client;
 
+            boardState.Pieces = GetPiecesArray();
+            return boardState;
+        }
+
+
+        private static ReadyMessage GetReadyMessage()
+        {
+            ReadyMessage readyMessage = new ReadyMessage();
+            readyMessage.MessageOrigination = MessageOrigination.Client;
+            Piece[] pieceArray = GetPiecesArray();
+
+            readyMessage.Pieces = pieceArray;
+            return readyMessage;
+        }
+
+        private static Piece[] GetPiecesArray()
+        {
             Piece pieceOne = new Piece(Rank.Private, PieceOwner.Client);
             pieceOne.XCoordinate = 2;
             pieceOne.YCoordinate = 3;
@@ -129,10 +201,7 @@ namespace GameOfTheGeneralsUnitTests
             Piece[] pieceArray = new Piece[2];
             pieceArray[0] = pieceOne;
             pieceArray[1] = pieceTwo;
-
-
-            boardState.Pieces = pieceArray;
-            return boardState;
+            return pieceArray;
         }
 
         private static Piece GetPiece()
