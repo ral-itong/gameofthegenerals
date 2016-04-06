@@ -5,8 +5,7 @@ namespace GameOfTheGenerals
 {
     public class Piece
     {
-        byte _xCoordinate;
-        byte _yCoordinate;
+        private Coordinate _coordinate;
         readonly PieceOwner _pieceOwner;
         readonly Rank _rank;
 
@@ -40,8 +39,7 @@ namespace GameOfTheGenerals
 
             return (this.PieceOwner == otherPiece.PieceOwner)
                 && (this.Rank == otherPiece.Rank)
-                && (this.XCoordinate == otherPiece.XCoordinate)
-                && (this.YCoordinate == otherPiece.YCoordinate);
+                && (this.Coordinate.Equals(otherPiece.Coordinate));
         }
 
         public override int GetHashCode()
@@ -65,8 +63,7 @@ namespace GameOfTheGenerals
 
 
             Piece piece = new Piece(rank, pieceOwner);
-            piece.XCoordinate = xCoordinate;
-            piece.YCoordinate = yCoordinate;
+            piece.Coordinate = new Coordinate(xCoordinate, yCoordinate);
 
             return piece;
         }
@@ -76,8 +73,8 @@ namespace GameOfTheGenerals
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
 
-            writer.Write(piece.XCoordinate);
-            writer.Write(piece.YCoordinate);
+            writer.Write(piece.Coordinate.XCoordinate);
+            writer.Write(piece.Coordinate.YCoordinate);
             writer.Write(Convert.ToByte(piece.PieceOwner));
             writer.Write(Convert.ToByte(piece.Rank));
 
@@ -102,33 +99,17 @@ namespace GameOfTheGenerals
             }
         }
 
-        public byte XCoordinate
+        public Coordinate Coordinate
         {
             get
             {
-                return _xCoordinate;
+                return _coordinate;
             }
 
             set
             {
-                _xCoordinate = value;
+                _coordinate = value;
             }
         }
-
-        public byte YCoordinate
-        {
-            get
-            {
-                return _yCoordinate;
-            }
-
-            set
-            {
-                _yCoordinate = value;
-            }
-        }
-
-
-
     }
 }

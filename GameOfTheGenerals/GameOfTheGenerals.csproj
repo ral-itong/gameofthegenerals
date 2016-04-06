@@ -44,13 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs" />
     <Compile Include="Messages\BoardStateMessage.cs" />
+    <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\MessageOrigination.cs" />
     <Compile Include="Messages\MessageType.cs" />
     <Compile Include="BoardSyncer.cs" />
     <Compile Include="ClientListener.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Messages\MovePieceAckMessage.cs" />
+    <Compile Include="Messages\MovePieceMessage.cs" />
     <Compile Include="Messages\MovePieceResult.cs" />
     <Compile Include="MessageUtils.cs" />
     <Compile Include="Messages\MessageWithBoard.cs" />

@@ -23,7 +23,6 @@ namespace GameOfTheGenerals
         }
 
 
-
         public static BoardStateMessage DeserializeBoardStateMessage(byte[] result)
         {
             MemoryStream stream = new MemoryStream(result);
@@ -40,6 +39,15 @@ namespace GameOfTheGenerals
             return boardState;
         }
 
+        public static MovePieceMessage DeserializeMovePieceMessage(byte[] result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static byte[] SerializeMovePieceMessage(MovePieceMessage movePieceMessage)
+        {
+            throw new NotImplementedException();
+        }
 
         public static ReadyMessage DeserializeReadyMessage(byte[] result)
         {

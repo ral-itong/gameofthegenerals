@@ -26,16 +26,14 @@ namespace GameOfTheGeneralsUnitTests
 
             Assert.AreEqual(piece.PieceOwner, deserializedPeace.PieceOwner);
             Assert.AreEqual(piece.Rank, deserializedPeace.Rank);
-            Assert.AreEqual(piece.XCoordinate, deserializedPeace.XCoordinate);
-            Assert.AreEqual(piece.YCoordinate, deserializedPeace.YCoordinate);
+            Assert.AreEqual(piece.Coordinate, deserializedPeace.Coordinate);
         }
 
         [TestMethod]
         public void APieceByteArraySerialized_ShouldHaveTheLengthOfFour()
         {
             Piece piece = new Piece(Rank.Private, PieceOwner.Client);
-            piece.XCoordinate = 11;
-            piece.YCoordinate = 12;
+            piece.Coordinate = new Coordinate(11, 12);
 
             byte[] pieceByteArray = Piece.ToByteArray(piece);
 
@@ -87,11 +85,7 @@ namespace GameOfTheGeneralsUnitTests
             BoardStateMessage boardState = GetBoardStateMessage();
             byte[] result = BoardStateMessage.ToByteArray(boardState);
 
-            MemoryStream stream = new MemoryStream(result);
-            BinaryReader reader = new BinaryReader(stream);
-
-            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
-            Header header = Header.Deserialize(headerBytes);
+            Header header = ExtractHeaderFromByteArray(result);
 
             Assert.AreEqual(result.Length, header.MessageLength);
         }
@@ -116,11 +110,7 @@ namespace GameOfTheGeneralsUnitTests
             ReadyMessage boardState = GetReadyMessage();
             byte[] result = BoardStateMessage.ToByteArray(boardState);
 
-            MemoryStream stream = new MemoryStream(result);
-            BinaryReader reader = new BinaryReader(stream);
-
-            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
-            Header header = Header.Deserialize(headerBytes);
+            Header header = ExtractHeaderFromByteArray(result);
 
             Assert.AreEqual(result.Length, header.MessageLength);
         }
@@ -131,11 +121,7 @@ namespace GameOfTheGeneralsUnitTests
             ReadyMessage boardState = GetReadyMessage();
             byte[] result = BoardStateMessage.ToByteArray(boardState);
 
-            MemoryStream stream = new MemoryStream(result);
-            BinaryReader reader = new BinaryReader(stream);
-
-            byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
-            Header header = Header.Deserialize(headerBytes);
+            Header header = ExtractHeaderFromByteArray(result);
 
             Assert.AreEqual(MessageType.Ready, header.MessageType);
         }
@@ -146,15 +132,35 @@ namespace GameOfTheGeneralsUnitTests
             MovePieceAckMessage message = GetMovePieceAckMessage();
             byte[] result = MovePieceAckMessage.Serialize(message);
 
+            Header header = ExtractHeaderFromByteArray(result);
+            Assert.AreEqual(result.Length, header.MessageLength);
+        }
+
+
+        [TestMethod]
+        public void WhenMovePieceIsDeserialized_ThePropertiesShouldBeIntact()
+        {
+            MovePieceAckMessage message = GetMovePieceAckMessage();
+            byte[] serializedMessage = MovePieceAckMessage.Serialize(message);
+            MovePieceAckMessage deserializedMessage = MovePieceAckMessage.Deserialize(serializedMessage);
+
+            Assert.AreEqual(message.MessageOrigination, deserializedMessage.MessageOrigination);
+            CollectionAssert.AreEqual(message.Pieces, deserializedMessage.Pieces);
+            Assert.AreEqual(message.Result, deserializedMessage.Result);
+            Assert.AreEqual(message.TurnNumber, deserializedMessage.TurnNumber);
+
+            
+        }
+
+        private static Header ExtractHeaderFromByteArray(byte[] result)
+        {
             MemoryStream stream = new MemoryStream(result);
             BinaryReader reader = new BinaryReader(stream);
 
             byte[] headerBytes = reader.ReadBytes(Header.SerialLength);
             Header header = Header.Deserialize(headerBytes);
-
-            Assert.AreEqual(result.Length, header.MessageLength);
+            return header;
         }
-
 
 
         private MovePieceAckMessage GetMovePieceAckMessage()
@@ -191,12 +197,10 @@ namespace GameOfTheGeneralsUnitTests
         private static Piece[] GetPiecesArray()
         {
             Piece pieceOne = new Piece(Rank.Private, PieceOwner.Client);
-            pieceOne.XCoordinate = 2;
-            pieceOne.YCoordinate = 3;
+            pieceOne.Coordinate = new Coordinate(2, 3);
 
             Piece pieceTwo = new Piece(Rank.Sergeant, PieceOwner.Client);
-            pieceTwo.XCoordinate = 5;
-            pieceTwo.YCoordinate = 5;
+            pieceTwo.Coordinate = new Coordinate(5, 5);
 
             Piece[] pieceArray = new Piece[2];
             pieceArray[0] = pieceOne;
@@ -207,8 +211,7 @@ namespace GameOfTheGeneralsUnitTests
         private static Piece GetPiece()
         {
             Piece piece = new Piece(Rank.BrigadierGeneral, PieceOwner.Client);
-            piece.XCoordinate = 10;
-            piece.YCoordinate = 10;
+            piece.Coordinate = new Coordinate(10, 10);
             return piece;
         }
 
