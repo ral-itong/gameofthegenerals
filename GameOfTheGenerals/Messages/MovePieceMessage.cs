@@ -8,14 +8,15 @@ namespace GameOfTheGenerals {
     public class MovePieceMessage : Message
     {
         private MessageOrigination _origination;
-        private byte _turnNumber;
+        private short _turnNumber;
         private Coordinate _fromCoordinate;
         private Coordinate _toCoordinate;
-        private Piece _piece;
+        private Rank _rank;
 
         public Header GetHeader()
         {
             Header header = new Header();
+            header.MessageLength = GetTotalLengthOfMessage();
             header.MessageType = MessageType.MovePiece;
             header.MessageOrigination = _origination;
             header.TurnNumber = _turnNumber;
@@ -23,12 +24,29 @@ namespace GameOfTheGenerals {
             return header;
         }
 
-        public byte[] ToByteArray()
+        public byte GetTotalLengthOfMessage()
         {
-            return SerializerDeserializer.SerializeMovePieceMessage(this);
+            byte lengthOfMessageOrigination = 1;
+            byte lengthOfFromCoordinate = 2;
+            byte lengthOfToCoordinate = 2;
+            byte lengthOfPieceRank = 1;
+            
+
+            return Convert.ToByte(lengthOfMessageOrigination + lengthOfFromCoordinate +
+                lengthOfToCoordinate + lengthOfPieceRank + Header.SerialLength);
         }
 
-        public MessageOrigination Origination
+        public static byte[] Serialize(MovePieceMessage message)
+        {
+            return SerializerDeserializer.SerializeMovePieceMessage(message);
+        }
+
+        public static MovePieceMessage Deserialize(byte[] byteArray)
+        {
+            return SerializerDeserializer.DeserializeMovePieceMessage(byteArray);
+        }
+
+        public MessageOrigination MessageOrigination
         {
             get
             {
@@ -41,7 +59,7 @@ namespace GameOfTheGenerals {
             }
         }
 
-        public byte TurnNumber
+        public short TurnNumber
         {
             get
             {
@@ -80,16 +98,16 @@ namespace GameOfTheGenerals {
             }
         }
 
-        public Piece Piece
+        public Rank Rank
         {
             get
             {
-                return _piece;
+                return _rank;
             }
 
             set
             {
-                _piece = value;
+                _rank = value;
             }
         }
     }

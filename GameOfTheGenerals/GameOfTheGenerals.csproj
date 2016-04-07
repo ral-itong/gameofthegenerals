@@ -45,18 +45,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
-    <Compile Include="Messages\BoardStateMessage.cs" />
+    <Compile Include="Messages\BoardStateUtil.cs" />
+    <Compile Include="Messages\GoodToGoMessage.cs" />
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\MessageOrigination.cs" />
     <Compile Include="Messages\MessageType.cs" />
     <Compile Include="BoardSyncer.cs" />
     <Compile Include="ClientListener.cs" />
     <Compile Include="Header.cs" />
+    <Compile Include="Messages\AckMessage.cs" />
     <Compile Include="Messages\MovePieceAckMessage.cs" />
     <Compile Include="Messages\MovePieceMessage.cs" />
     <Compile Include="Messages\MovePieceResult.cs" />
+    <Compile Include="Messages\PieceToBeRemoved.cs" />
+    <Compile Include="Messages\RemovePieceAckMessage.cs" />
+    <Compile Include="Messages\RemovePieceMessage.cs" />
+    <Compile Include="Messages\SetupFailMessage.cs" />
     <Compile Include="MessageUtils.cs" />
-    <Compile Include="Messages\MessageWithBoard.cs" />
+    <Compile Include="Messages\BoardStateMessage.cs" />
     <Compile Include="PieceOwner.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameOfTheGeneralsForm.cs">
@@ -86,6 +92,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="GameOfTheGeneralsClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -7,10 +7,9 @@ namespace GameOfTheGenerals
 {
     public interface Message
     {
-        MessageOrigination Origination { get; set; }
-        byte TurnNumber { get; set; }
+        MessageOrigination MessageOrigination { get; set; }
+        short TurnNumber { get; set; }
         Header GetHeader();
-        byte[] ToByteArray();
 
     }
 }

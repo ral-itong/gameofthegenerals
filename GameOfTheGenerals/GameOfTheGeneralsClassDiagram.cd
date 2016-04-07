@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameOfTheGenerals.BoardStateMessage" Collapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAAAAAAEAAAAAMQAIAAAAABAEQAAAAAAIAAABAQ=</HashCode>
+      <FileName>Messages\MessageWithBoard.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameOfTheGenerals.MovePieceAckMessage" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAABMQAAAQAACBAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\MovePieceAckMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameOfTheGenerals.MovePieceMessage" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAEAAACAAAAACEQAAAAAACBAGQAACAAAAAAACAA=</HashCode>
+      <FileName>Messages\MovePieceMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

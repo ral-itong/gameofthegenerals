@@ -13,7 +13,7 @@ namespace GameOfTheGeneralsUnitTests
         public void PieceShouldBeShouldHaveAByteConverter()
         {
             Piece piece = GetPiece();
-            Piece.ToByteArray(piece);
+            Piece.Serialize(piece);
         }
 
 
@@ -21,7 +21,7 @@ namespace GameOfTheGeneralsUnitTests
         public void APieceShouldHaveADeserializer()
         {
             Piece piece = GetPiece();
-            byte[] pieceByteArray = Piece.ToByteArray(piece);
+            byte[] pieceByteArray = Piece.Serialize(piece);
             Piece deserializedPeace = Piece.Deserialize(pieceByteArray);
 
             Assert.AreEqual(piece.PieceOwner, deserializedPeace.PieceOwner);
@@ -35,7 +35,7 @@ namespace GameOfTheGeneralsUnitTests
             Piece piece = new Piece(Rank.Private, PieceOwner.Client);
             piece.Coordinate = new Coordinate(11, 12);
 
-            byte[] pieceByteArray = Piece.ToByteArray(piece);
+            byte[] pieceByteArray = Piece.Serialize(piece);
 
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
@@ -45,18 +45,17 @@ namespace GameOfTheGeneralsUnitTests
             Assert.AreEqual(4, stream.ToArray().Length);
         }
         
-        
         [TestMethod]
-        public void AHeaderShouldBeSerialized_WithALengthOfSixBytes()
+        public void AHeaderShouldBeSerialized_WithALengthOfEightBytes()
         {
             Header header = new Header();
-            header.MessageLength = 6;
+            header.MessageLength = 9;
             header.MessageOrigination = MessageOrigination.Client;
             header.MessageType = MessageType.Ready;
             header.TurnNumber = 0;
 
-            byte[] result = Header.ToByteArray(header);
-            Assert.AreEqual(result.Length, 6);
+            byte[] result = Header.Serialize(header);
+            Assert.AreEqual(result.Length, 8);
         }
 
         [TestMethod]
@@ -65,9 +64,14 @@ namespace GameOfTheGeneralsUnitTests
             List<byte> byteList = new List<byte>();
             byteList.Add(0xAA);
             byteList.Add(0xAA);
+
             byteList.Add(0x06);
             byteList.Add(0x00);
+
+            byteList.Add(0x00);
             byteList.Add(0x01);
+
+            byteList.Add(0x04);
             byteList.Add(0x00);
 
             Header result = Header.Deserialize(byteList.ToArray());
@@ -75,7 +79,7 @@ namespace GameOfTheGeneralsUnitTests
             Assert.AreEqual(6, result.MessageLength);
             Assert.AreEqual(MessageOrigination.Host, result.MessageOrigination);
             Assert.AreEqual(MessageType.Ready, result.MessageType);
-            Assert.AreEqual(0, result.TurnNumber);
+            Assert.AreEqual(4, result.TurnNumber);
         }
 
 
@@ -98,10 +102,9 @@ namespace GameOfTheGeneralsUnitTests
 
             BoardStateMessage deserializedBoardState = BoardStateMessage.Deserialize(result);
 
-            Assert.AreEqual(boardState.MessageOrigination, deserializedBoardState.MessageOrigination);
 
             CollectionAssert.AreEqual(boardState.Pieces, deserializedBoardState.Pieces);
-            Assert.AreEqual(boardState.TurnNumber, deserializedBoardState.TurnNumber);
+            Assert.AreEqual(boardState.GetHeader(), deserializedBoardState.GetHeader());
         }
 
         [TestMethod]
@@ -130,7 +133,7 @@ namespace GameOfTheGeneralsUnitTests
         public void WhenMovePieceAckMessageIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
         {
             MovePieceAckMessage message = GetMovePieceAckMessage();
-            byte[] result = MovePieceAckMessage.Serialize(message);
+            byte[] result = AckMessage.Serialize(message);
 
             Header header = ExtractHeaderFromByteArray(result);
             Assert.AreEqual(result.Length, header.MessageLength);
@@ -138,18 +141,164 @@ namespace GameOfTheGeneralsUnitTests
 
 
         [TestMethod]
-        public void WhenMovePieceIsDeserialized_ThePropertiesShouldBeIntact()
+        public void WhenMovePieceAckIsDeserialized_ThePropertiesShouldBeIntact()
         {
             MovePieceAckMessage message = GetMovePieceAckMessage();
-            byte[] serializedMessage = MovePieceAckMessage.Serialize(message);
-            MovePieceAckMessage deserializedMessage = MovePieceAckMessage.Deserialize(serializedMessage);
+            byte[] serializedMessage = AckMessage.Serialize(message);
+            AckMessage deserializedMessage = AckMessage.Deserialize(serializedMessage);
 
-            Assert.AreEqual(message.MessageOrigination, deserializedMessage.MessageOrigination);
             CollectionAssert.AreEqual(message.Pieces, deserializedMessage.Pieces);
+            Assert.AreEqual(message.GetHeader(), deserializedMessage.GetHeader());
             Assert.AreEqual(message.Result, deserializedMessage.Result);
-            Assert.AreEqual(message.TurnNumber, deserializedMessage.TurnNumber);
+        }
 
-            
+        [TestMethod]
+        public void WhenRemovePieceAckIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            RemovePieceAckMessage message = GetRemovePieceAckMessage();
+            byte[] result = AckMessage.Serialize(message);
+
+            Header header = ExtractHeaderFromByteArray(result);
+            Assert.AreEqual(result.Length, header.MessageLength);
+        }
+
+        [TestMethod]
+        public void WhenRemovePieceAckIsDeserialized_ThePropertiesShouldBeIntact()
+        {
+            RemovePieceAckMessage message = GetRemovePieceAckMessage();
+            byte[] serializedMessage = AckMessage.Serialize(message);
+            AckMessage deserializedMessage = AckMessage.Deserialize(serializedMessage);
+
+            CollectionAssert.AreEqual(message.Pieces, deserializedMessage.Pieces);
+            Assert.AreEqual(message.GetHeader(), deserializedMessage.GetHeader());
+            Assert.AreEqual(message.Result, deserializedMessage.Result);
+        }
+
+        [TestMethod]
+        public void WhenMovePieceMessageIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            MovePieceMessage message = GetMovePieceMessage();
+            byte[] serializedMessage = MovePieceMessage.Serialize(message);
+
+            Header header = ExtractHeaderFromByteArray(serializedMessage);
+            Assert.AreEqual(serializedMessage.Length, header.MessageLength);
+        }
+
+        [TestMethod]
+        public void WhenMovePieceIsDeserialized_ThePropertiesShouldBeIntact()
+        {
+            MovePieceMessage message = GetMovePieceMessage();
+            byte[] serializedMessage = MovePieceMessage.Serialize(message);
+            MovePieceMessage deserializedMessage = MovePieceMessage.Deserialize(serializedMessage);
+
+            Assert.AreEqual(message.FromCoordinate, deserializedMessage.FromCoordinate);
+            Assert.AreEqual(message.ToCoordinate, deserializedMessage.ToCoordinate);
+            Assert.AreEqual(message.MessageOrigination, deserializedMessage.MessageOrigination);
+            Assert.AreEqual(message.Rank, deserializedMessage.Rank);
+        }
+
+        [TestMethod]
+        public void WhenRemovePieceIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            RemovePieceMessage message = GetRemovePieceMessage();
+            byte[] serializedMessage = RemovePieceMessage.Serialize(message);
+
+            Header header = ExtractHeaderFromByteArray(serializedMessage);
+            Assert.AreEqual(serializedMessage.Length, header.MessageLength);
+        }
+
+        [TestMethod]
+        public void WhenRemovePieceIsDeserialized_ThePropertiesShouldBeIntact()
+        {
+            RemovePieceMessage message = GetRemovePieceMessage();
+            byte[] serializedMessage = RemovePieceMessage.Serialize(message);
+            RemovePieceMessage deserializedMessage = RemovePieceMessage.Deserialize(serializedMessage);
+
+            Assert.AreEqual(message.GetHeader(), deserializedMessage.GetHeader());
+            Assert.AreEqual(message.Piece, deserializedMessage.Piece);
+            Assert.AreEqual(message.PieceToBeRemoved, deserializedMessage.PieceToBeRemoved);
+        }
+
+        [TestMethod]
+        public void WhenSetupFailMessageIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            SetupFailMessage message = GetSetupFailMessage();
+            byte[] serializedMessage = SetupFailMessage.Serialize(message);
+
+            Header header = ExtractHeaderFromByteArray(serializedMessage);
+            Assert.AreEqual(serializedMessage.Length, header.MessageLength);
+        }
+
+        [TestMethod]
+        public void WhenSetupFailMessageIsDeserialized_ThePropertiesShouldRemainIntact()
+        {
+            SetupFailMessage message = GetSetupFailMessage();
+            byte[] serializedMessage = SetupFailMessage.Serialize(message);
+            SetupFailMessage deserializedMessage = SetupFailMessage.Deserialize(serializedMessage);
+
+            Assert.AreEqual(message.GetHeader(), deserializedMessage.GetHeader());
+        }
+
+        [TestMethod]
+        public void WhenGoodToGoMessageIsSerialized_TheHeaderLengthShouldBeEqualToTheLengthOfTheByteArray()
+        {
+            GoodToGoMessage message = GetGoodToGoMessage();
+            byte[] serializedMessage = GoodToGoMessage.Serialize(message);
+
+            Header header = ExtractHeaderFromByteArray(serializedMessage);
+            Assert.AreEqual(serializedMessage.Length, header.MessageLength);
+        }
+
+
+        [TestMethod]
+        public void WhenGoodToGoMessageIsDeserialized_ThePropertiesShouldRemainIntact()
+        {
+            GoodToGoMessage message = GetGoodToGoMessage();
+            byte[] serializedMessage = GoodToGoMessage.Serialize(message);
+            GoodToGoMessage deserializedMessage = GoodToGoMessage.Deserialize(serializedMessage);
+
+            Assert.AreEqual(message.GetHeader(), deserializedMessage.GetHeader());
+        }
+
+        private GoodToGoMessage GetGoodToGoMessage()
+        {
+            GoodToGoMessage message = new GoodToGoMessage();
+            message.MessageOrigination = MessageOrigination.Client;
+            message.TurnNumber = 23;
+
+            return message;
+        }
+
+        private SetupFailMessage GetSetupFailMessage()
+        {
+            SetupFailMessage message = new SetupFailMessage();
+            message.MessageOrigination = MessageOrigination.Client;
+            message.TurnNumber = 24;
+
+            return message;
+        }
+
+        private RemovePieceMessage GetRemovePieceMessage()
+        {
+            RemovePieceMessage message = new RemovePieceMessage();
+            message.MessageOrigination = MessageOrigination.Host;
+            message.Piece = GetPiece();
+            message.PieceToBeRemoved = PieceToBeRemoved.Yes;
+            message.TurnNumber = 23;
+
+            return message;
+        }
+
+        private MovePieceMessage GetMovePieceMessage()
+        {
+            MovePieceMessage message = new MovePieceMessage();
+            message.FromCoordinate = new Coordinate(2, 3);
+            message.ToCoordinate = new Coordinate(4, 6);
+            message.Rank = Rank.Captain;
+            message.TurnNumber = 23;
+            message.MessageOrigination = MessageOrigination.Host;
+
+            return message;
         }
 
         private static Header ExtractHeaderFromByteArray(byte[] result)
@@ -167,6 +316,17 @@ namespace GameOfTheGeneralsUnitTests
         {
             MovePieceAckMessage message = new MovePieceAckMessage();
             message.MessageOrigination = MessageOrigination.Client;
+            message.Pieces = GetPiecesArray();
+            message.Result = MovePieceResult.Sucessful;
+            message.TurnNumber = 22;
+
+            return message;
+        }
+
+        private RemovePieceAckMessage GetRemovePieceAckMessage()
+        {
+            RemovePieceAckMessage message = new RemovePieceAckMessage();
+            message.MessageOrigination = MessageOrigination.Host;
             message.Pieces = GetPiecesArray();
             message.Result = MovePieceResult.Sucessful;
             message.TurnNumber = 22;

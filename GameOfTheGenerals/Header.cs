@@ -10,14 +10,14 @@ namespace GameOfTheGenerals
     public class Header
     {
 
+        private short _messageLength;
         private MessageType _messageType;
-        private byte _messageLength;
+        private short _turnNumber;
         private MessageOrigination _messageOrigination;
-        private byte _turnNumber;
         public const ushort HeaderConstant = 0xAAAA;
-        public const byte SerialLength = 6;
+        public const short SerialLength = 8;
 
-        public static byte[] ToByteArray(Header header)
+        public static byte[] Serialize(Header header)
         {
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
@@ -37,10 +37,10 @@ namespace GameOfTheGenerals
             BinaryReader reader = new BinaryReader(stream);
 
             SkipHeaderConstant(reader);
-            header.MessageLength = reader.ReadByte();
+            header.MessageLength = reader.ReadInt16();
             header.MessageOrigination = (MessageOrigination)Enum.ToObject(typeof(MessageOrigination), reader.ReadByte());
             header.MessageType = (MessageType)Enum.ToObject(typeof(MessageType), reader.ReadByte());
-            header.TurnNumber = reader.ReadByte();
+            header.TurnNumber = reader.ReadInt16();
 
             return header;
         }
@@ -48,6 +48,45 @@ namespace GameOfTheGenerals
         private static void SkipHeaderConstant(BinaryReader reader)
         {
             reader.ReadBytes(2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Header otherHeader = obj as Header;
+            if (otherHeader == null)
+                return false;
+
+            return (MessageLength == otherHeader.MessageLength) &&
+                 (MessageType == otherHeader.MessageType) &&
+                (MessageOrigination == otherHeader.MessageOrigination) &&
+                (TurnNumber == otherHeader.TurnNumber);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 31;
+            hash = (hash * 31) + MessageLength.GetHashCode();
+            hash = (hash * 31) + MessageType.GetHashCode();
+            hash = (hash * 31) + MessageOrigination.GetHashCode();
+            hash = (hash * 31) + TurnNumber.GetHashCode();
+
+            return hash;
+        }
+
+        public short MessageLength
+        {
+            get
+            {
+                return _messageLength;
+            }
+
+            set
+            {
+                _messageLength = value;
+            }
         }
 
         public MessageType MessageType
@@ -60,19 +99,6 @@ namespace GameOfTheGenerals
             set
             {
                 _messageType = value;
-            }
-        }
-
-        public byte MessageLength
-        {
-            get
-            {
-                return _messageLength;
-            }
-
-            set
-            {
-                _messageLength = value;
             }
         }
 
@@ -89,7 +115,7 @@ namespace GameOfTheGenerals
             }
         }
 
-        public byte TurnNumber
+        public short TurnNumber
         {
             get
             {

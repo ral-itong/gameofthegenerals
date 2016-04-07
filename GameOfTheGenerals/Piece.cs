@@ -68,7 +68,7 @@ namespace GameOfTheGenerals
             return piece;
         }
 
-        public static byte[] ToByteArray(Piece piece)
+        public static byte[] Serialize(Piece piece)
         {
             var stream = new MemoryStream();
             var writer = new BinaryWriter(stream);
