@@ -7,19 +7,15 @@ namespace GameOfTheGeneralsUnitTests
     [TestClass]
     public class BoardSyncingTest
     {
-        BoardSyncer syncer;
+        ClientReader syncer;
         [TestInitialize]
         public void InitTest()
         {
-            syncer = new BoardSyncer();
-            syncer.ClientSocket = new MockSocketAdapter();
+            syncer = new ClientReader(new BoardSyncReadCallback(), new MockSocketAdapter());
+
         }
 
-        [TestMethod]
-        public void TheSyncerShouldHaveAClientSocket()
-        {
-            syncer.ClientSocket = new MockSocketAdapter();
-        }
+  
 
         [TestMethod]
         public void TheSyncerShouldListenToTheClientReadyMessage()

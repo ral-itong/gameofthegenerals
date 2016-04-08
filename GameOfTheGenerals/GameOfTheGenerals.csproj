@@ -44,42 +44,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinate.cs" />
-    <Compile Include="Messages\BoardStateUtil.cs" />
-    <Compile Include="Messages\GoodToGoMessage.cs" />
-    <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\MessageOrigination.cs" />
-    <Compile Include="Messages\MessageType.cs" />
-    <Compile Include="BoardSyncer.cs" />
-    <Compile Include="ClientListener.cs" />
-    <Compile Include="Header.cs" />
-    <Compile Include="Messages\AckMessage.cs" />
-    <Compile Include="Messages\MovePieceAckMessage.cs" />
-    <Compile Include="Messages\MovePieceMessage.cs" />
-    <Compile Include="Messages\MovePieceResult.cs" />
-    <Compile Include="Messages\PieceToBeRemoved.cs" />
-    <Compile Include="Messages\RemovePieceAckMessage.cs" />
-    <Compile Include="Messages\RemovePieceMessage.cs" />
-    <Compile Include="Messages\SetupFailMessage.cs" />
-    <Compile Include="MessageUtils.cs" />
-    <Compile Include="Messages\BoardStateMessage.cs" />
-    <Compile Include="PieceOwner.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="GameRelated\Objects\Coordinate.cs" />
+    <Compile Include="Networking\BoardSyncReadCallback.cs" />
+    <Compile Include="Networking\ICallback.cs" />
+    <Compile Include="GameRelated\Interpreter\MessageInterpreter.cs" />
+    <Compile Include="GameRelated\Utilities\BoardStateUtil.cs" />
+    <Compile Include="GameRelated\Messages\GoodToGoMessage.cs" />
+    <Compile Include="GameRelated\Utilities\Message.cs" />
+    <Compile Include="GameRelated\Utilities\MessageOrigination.cs" />
+    <Compile Include="GameRelated\Utilities\MessageType.cs" />
+    <Compile Include="Networking\ClientReader.cs" />
+    <Compile Include="Networking\ClientListener.cs" />
+    <Compile Include="GameRelated\Messages\Header.cs" />
+    <Compile Include="GameRelated\Utilities\AckMessage.cs" />
+    <Compile Include="GameRelated\Messages\MovePieceAckMessage.cs" />
+    <Compile Include="GameRelated\Messages\MovePieceMessage.cs" />
+    <Compile Include="GameRelated\Utilities\MovePieceResult.cs" />
+    <Compile Include="GameRelated\Utilities\PieceToBeRemoved.cs" />
+    <Compile Include="GameRelated\Messages\RemovePieceAckMessage.cs" />
+    <Compile Include="GameRelated\Messages\RemovePieceMessage.cs" />
+    <Compile Include="GameRelated\Messages\SetupFailMessage.cs" />
+    <Compile Include="GameRelated\Messages\BoardStateMessage.cs" />
+    <Compile Include="GameRelated\Objects\PieceOwner.cs" />
+    <Compile Include="GameRelated\Objects\Player.cs" />
     <Compile Include="GameOfTheGeneralsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameOfTheGeneralsForm.Designer.cs">
       <DependentUpon>GameOfTheGeneralsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ISocket.cs" />
-    <Compile Include="Piece.cs" />
+    <Compile Include="Networking\IManualResetEvent.cs" />
+    <Compile Include="Networking\ISocket.cs" />
+    <Compile Include="GameRelated\Objects\Piece.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rank.cs" />
-    <Compile Include="Messages\ReadyMessage.cs" />
-    <Compile Include="Messages\SerializerDeserializer.cs" />
-    <Compile Include="SocketAdapter.cs" />
-    <Compile Include="StateObject.cs" />
+    <Compile Include="GameRelated\Objects\Rank.cs" />
+    <Compile Include="GameRelated\Messages\ReadyMessage.cs" />
+    <Compile Include="GameRelated\Utilities\SerializerDeserializer.cs" />
+    <Compile Include="Networking\SocketAdapter.cs" />
+    <Compile Include="Networking\StateObject.cs" />
     <EmbeddedResource Include="GameOfTheGeneralsForm.resx">
       <DependentUpon>GameOfTheGeneralsForm.cs</DependentUpon>
     </EmbeddedResource>
