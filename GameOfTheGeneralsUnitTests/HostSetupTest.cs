@@ -33,6 +33,7 @@ namespace GameOfTheGeneralsUnitTests
         }
 
         [TestMethod]
+        [Ignore]
         public void WhenHostSocketListens_ItShouldBeAbleToListenAtPort_10801()
         {
             hostSocket.StartListening();
