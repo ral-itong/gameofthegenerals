@@ -5,8 +5,8 @@ using System.Text;
 
 namespace GameOfTheGenerals
 {
-    public interface IReadCallback
+    public interface ICallback
     {
-        void ReadCallback(IAsyncResult ar);
+        void Callback(IAsyncResult ar);
     }
 }

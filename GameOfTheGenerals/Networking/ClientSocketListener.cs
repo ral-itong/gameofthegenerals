@@ -5,15 +5,15 @@ using System.Threading;
 
 namespace GameOfTheGenerals
 {
-    public class ClientListener
+    public class ClientSocketListener
     {
-        private ManualResetEvent _otherPlayerConnected;
+        private IManualResetEvent _otherPlayerConnected;
         private int _portNumber;
         private ISocket _socketAdapter;
         private ISocket _otherPlayerSocketAdapter;
         
 
-        public ClientListener()
+        public ClientSocketListener()
         {
             _portNumber = 10801;
             _socketAdapter = new SocketAdapter(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -61,7 +61,7 @@ namespace GameOfTheGenerals
             }
         }
 
-        public ManualResetEvent OtherPlayerConnected
+        public IManualResetEvent OtherPlayerConnected
         {
             get
             {

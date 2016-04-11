@@ -10,13 +10,13 @@ namespace GameOfTheGeneralsUnitTests
     public class HostSetupTest
     {
 
-        ClientListener hostSocket;
+        ClientSocketListener hostSocket;
 
 
         [TestInitialize]
         public void InitTest()
         {
-            hostSocket = new ClientListener();
+            hostSocket = new ClientSocketListener();
         }
 
 
@@ -29,10 +29,11 @@ namespace GameOfTheGeneralsUnitTests
         [TestMethod]
         public void ThereShouldBeClassThatEstablishesTheHost()
         {
-            hostSocket = new ClientListener();
+            hostSocket = new ClientSocketListener();
         }
 
         [TestMethod]
+        [Ignore]
         public void WhenHostSocketListens_ItShouldBeAbleToListenAtPort_10801()
         {
             hostSocket.StartListening();

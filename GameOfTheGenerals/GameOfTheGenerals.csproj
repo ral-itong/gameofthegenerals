@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameRelated\Objects\Coordinate.cs" />
+    <Compile Include="GameRelated\Objects\Game.cs" />
     <Compile Include="Networking\BoardSyncReadCallback.cs" />
     <Compile Include="Networking\ICallback.cs" />
     <Compile Include="GameRelated\Interpreter\MessageInterpreter.cs" />
@@ -53,8 +54,8 @@
     <Compile Include="GameRelated\Utilities\Message.cs" />
     <Compile Include="GameRelated\Utilities\MessageOrigination.cs" />
     <Compile Include="GameRelated\Utilities\MessageType.cs" />
-    <Compile Include="Networking\ClientReader.cs" />
-    <Compile Include="Networking\ClientListener.cs" />
+    <Compile Include="Networking\TcpListenerReader.cs" />
+    <Compile Include="Networking\ClientSocketListener.cs" />
     <Compile Include="GameRelated\Messages\Header.cs" />
     <Compile Include="GameRelated\Utilities\AckMessage.cs" />
     <Compile Include="GameRelated\Messages\MovePieceAckMessage.cs" />
@@ -105,6 +106,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameRelated\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

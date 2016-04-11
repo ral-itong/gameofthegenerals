@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace GameOfTheGenerals
 {
-    interface IManualResetEvent
+    public interface IManualResetEvent
     {
         bool Reset();
         bool WaitOne();

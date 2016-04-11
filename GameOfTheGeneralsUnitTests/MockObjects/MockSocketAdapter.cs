@@ -43,8 +43,6 @@ namespace GameOfTheGeneralsUnitTests
             
         }
 
-        
-
         ISocket ISocket.EndAccept(IAsyncResult ar)
         {
             return new MockSocketAdapter();
@@ -58,6 +56,11 @@ namespace GameOfTheGeneralsUnitTests
         public int EndReceive(IAsyncResult ar)
         {
             return 0;
+        }
+
+        public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback callback, object state)
+        {
+            return new MockAsyncResult();
         }
 
         public Socket Socket

@@ -62,6 +62,11 @@ namespace GameOfTheGenerals
             return _socket.EndReceive(ar);
         }
 
+        public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback callback, object state)
+        {
+            return _socket.BeginSend(buffer, offset, size, socketFlags, callback, state);
+        }
+
         public Socket Socket
         {
             get

@@ -6,21 +6,10 @@ using GameOfTheGenerals;
 namespace GameOfTheGeneralsUnitTests
 {
     [TestClass]
-    public class GameOfTheGeneralUnitTests
+    public class PieceEatingTests
     {
         Piece piece;
-        Player game;
-
-        [TestInitialize]
-        public void InitTest()
-        {
-            game = new Player();
-        }
-
-        [TestMethod]
-        public void ThereShouldBeAGameClass()
-        {
-        }
+   
 
         [TestMethod()]
         public void ThereShouldBeAnEnumOfRanks()
