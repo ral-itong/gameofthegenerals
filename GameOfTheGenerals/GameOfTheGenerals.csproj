@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="GameRelated\Objects\Coordinate.cs" />
     <Compile Include="GameRelated\Objects\Game.cs" />
-    <Compile Include="Networking\BoardSyncReadCallback.cs" />
     <Compile Include="Networking\ICallback.cs" />
     <Compile Include="GameRelated\Interpreter\MessageInterpreter.cs" />
     <Compile Include="GameRelated\Utilities\BoardStateUtil.cs" />
@@ -54,8 +53,7 @@
     <Compile Include="GameRelated\Utilities\Message.cs" />
     <Compile Include="GameRelated\Utilities\MessageOrigination.cs" />
     <Compile Include="GameRelated\Utilities\MessageType.cs" />
-    <Compile Include="Networking\TcpListenerReader.cs" />
-    <Compile Include="Networking\ClientSocketListener.cs" />
+    <Compile Include="Networking\TcpUtil.cs" />
     <Compile Include="GameRelated\Messages\Header.cs" />
     <Compile Include="GameRelated\Utilities\AckMessage.cs" />
     <Compile Include="GameRelated\Messages\MovePieceAckMessage.cs" />

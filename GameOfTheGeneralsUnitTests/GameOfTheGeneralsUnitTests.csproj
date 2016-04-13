@@ -62,11 +62,9 @@
     <Compile Include="ByteConversionTests.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="MockObjects\AsyncResultMock.cs" />
-    <Compile Include="BoardSyncingTest.cs" />
     <Compile Include="Examples\AsynchronousClientSocketExample.cs" />
     <Compile Include="Examples\AsynchronousServerSocketExample.cs" />
     <Compile Include="PieceEatingTests.cs" />
-    <Compile Include="HostSetupTest.cs" />
     <Compile Include="MockObjects\MockSocketAdapter.cs" />
     <Compile Include="MoqSamples\MoqExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
