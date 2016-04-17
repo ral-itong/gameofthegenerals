@@ -47,7 +47,7 @@ namespace GameOfTheGenerals
         }
 
 
-        public static byte[] ToByteArray(BoardStateMessage boardStateMessage)
+        public static byte[] Serialize(BoardStateMessage boardStateMessage)
         {
             return SerializerDeserializer.SerializeBoardStateMessage(boardStateMessage);
         }

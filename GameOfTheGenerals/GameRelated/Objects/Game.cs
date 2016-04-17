@@ -12,6 +12,10 @@ namespace GameOfTheGenerals
         private int _portNumber;
         private ISocket _hostSocket;
         private ISocket _clientSocket;
+        private List<Piece> _pieces;
+        private ITcpUtil _tcpUtil;
+        private short _turnNumber;
+
 
 
 
@@ -19,6 +23,8 @@ namespace GameOfTheGenerals
         {
             _portNumber = 10801;
             HostSocket = new SocketAdapter(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Pieces = new List<Piece>();
+            TcpUtil = new TcpUtilAdapter();
         }
 
         public void StartGame()
@@ -29,35 +35,75 @@ namespace GameOfTheGenerals
 
         private void ListenForClients()
         {
-            TcpUtil.ListenForClients(HostSocket, _portNumber, new AsyncCallback(AcceptCallBack));
+            TcpUtil.ListenForClients(HostSocket, _portNumber, new AsyncCallback(GetClientSocketAndWaitForClientReadyMessage));
         }
-
 
         private void SetupBoard()
         {
 
         }
 
-        private void AcceptCallBack(IAsyncResult ar)
+        private void GetClientSocketAndWaitForClientReadyMessage(IAsyncResult ar)
         {
-            ExtractOtherPlayerSocket(ar);
+            ExtractClientSocket(ar);
             WaitForClientsReadyMessage();
         }
 
         private void WaitForClientsReadyMessage()
         {
-            TcpUtil.Listen(new AsyncCallback(PopulateBoardWithClientPieces), _clientSocket);
+            TcpUtil.Listen(ClientSocket, new AsyncCallback(PopulateBoardWithClientPieces));
         }
 
         public void PopulateBoardWithClientPieces(IAsyncResult ar)
         {
             StateObject state = (StateObject)ar.AsyncState;
+            BoardStateMessage message = ReadyMessage.Deserialize(state.buffer);
+            Pieces.AddRange(message.Pieces);
+
         }
 
-        private void ExtractOtherPlayerSocket(IAsyncResult ar)
+        public void SendClientReadyMessage()
+        {
+            ReadyMessage readyMessage = new ReadyMessage();
+            readyMessage.MessageOrigination = MessageOrigination.Host;
+            readyMessage.Pieces = Pieces.ToArray();
+
+            TcpUtil.Send(ClientSocket, new AsyncCallback(WaitForClientBoardStateMessage), ReadyMessage.Serialize(readyMessage));
+        }
+
+        public void WaitForClientBoardStateMessage(IAsyncResult ar)
+        {
+            TcpUtil.Listen(ClientSocket, new AsyncCallback(CheckIfBoardStateMatch));
+        }
+
+        public void CheckIfBoardStateMatch(IAsyncResult ar)
+        {
+            StateObject state = (StateObject)ar.AsyncState;
+            BoardStateMessage message = BoardStateMessage.Deserialize(state.buffer);
+            if (Enumerable.SequenceEqual(message.Pieces, Pieces.ToArray()))
+                StartMovePieceSequence();
+            else
+                SendClientSetupFailed();
+
+        }
+
+        private void SendClientSetupFailed()
+        {
+            SetupFailMessage message = new SetupFailMessage();
+            message.TurnNumber = _turnNumber;
+            message.MessageOrigination = MessageOrigination.Host;
+            TcpUtil.Send(ClientSocket, new AsyncCallback(SendClientSetupFailedCallback), SetupFailMessage.Serialize(message));
+        }
+
+        private void SendClientSetupFailedCallback(IAsyncResult ar)
+        {
+
+        }
+
+        private void ExtractClientSocket(IAsyncResult ar)
         {
             ISocket listener = ar.AsyncState as ISocket;
-            _clientSocket = listener.EndAccept(ar);
+            ClientSocket = listener.EndAccept(ar);
         }
 
         public ISocket HostSocket
@@ -73,9 +119,53 @@ namespace GameOfTheGenerals
             }
         }
 
+        public ISocket ClientSocket
+        {
+            get
+            {
+                return _clientSocket;
+            }
 
+            set
+            {
+                _clientSocket = value;
+            }
+        }
 
+        public List<Piece> Pieces
+        {
+            get
+            {
+                return _pieces;
+            }
 
+            set
+            {
+                _pieces = value;
+            }
+        }
 
+        public void StartMovePieceSequence()
+        {
+
+        }
+
+        public void MovePiece(Piece piece, Coordinate coordinate)
+        {
+
+        }
+
+        public ITcpUtil TcpUtil
+        {
+            get
+            {
+                return _tcpUtil;
+            }
+
+            set
+            {
+                _tcpUtil = value;
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="GameRelated\Objects\Coordinate.cs" />
     <Compile Include="GameRelated\Objects\Game.cs" />
+    <Compile Include="GameRelated\Objects\TcpUtil.cs" />
     <Compile Include="Networking\ICallback.cs" />
     <Compile Include="GameRelated\Interpreter\MessageInterpreter.cs" />
     <Compile Include="GameRelated\Utilities\BoardStateUtil.cs" />
@@ -53,7 +54,6 @@
     <Compile Include="GameRelated\Utilities\Message.cs" />
     <Compile Include="GameRelated\Utilities\MessageOrigination.cs" />
     <Compile Include="GameRelated\Utilities\MessageType.cs" />
-    <Compile Include="Networking\TcpUtil.cs" />
     <Compile Include="GameRelated\Messages\Header.cs" />
     <Compile Include="GameRelated\Utilities\AckMessage.cs" />
     <Compile Include="GameRelated\Messages\MovePieceAckMessage.cs" />
@@ -66,15 +66,17 @@
     <Compile Include="GameRelated\Messages\BoardStateMessage.cs" />
     <Compile Include="GameRelated\Objects\PieceOwner.cs" />
     <Compile Include="GameRelated\Objects\Player.cs" />
-    <Compile Include="GameOfTheGeneralsForm.cs">
+    <Compile Include="FormArrange.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameOfTheGeneralsForm.Designer.cs">
-      <DependentUpon>GameOfTheGeneralsForm.cs</DependentUpon>
+      <DependentUpon>FormArrange.cs</DependentUpon>
     </Compile>
     <Compile Include="Networking\IManualResetEvent.cs" />
     <Compile Include="Networking\ISocket.cs" />
     <Compile Include="GameRelated\Objects\Piece.cs" />
+    <Compile Include="Networking\ITcpUtil.cs" />
+    <Compile Include="Networking\TcpUtilAdapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameRelated\Objects\Rank.cs" />
@@ -83,7 +85,7 @@
     <Compile Include="Networking\SocketAdapter.cs" />
     <Compile Include="Networking\StateObject.cs" />
     <EmbeddedResource Include="GameOfTheGeneralsForm.resx">
-      <DependentUpon>GameOfTheGeneralsForm.cs</DependentUpon>
+      <DependentUpon>FormArrange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -93,6 +95,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="GameOfTheGeneralsClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
@@ -107,6 +110,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameRelated\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GameRelated\PieceImages\brigadier_general.bmp" />
+    <Content Include="GameRelated\PieceImages\captain.bmp" />
+    <Content Include="GameRelated\PieceImages\colonel.bmp" />
+    <Content Include="GameRelated\PieceImages\first_lieutenant.bmp" />
+    <Content Include="GameRelated\PieceImages\flag.bmp" />
+    <Content Include="GameRelated\PieceImages\general.bmp" />
+    <Content Include="GameRelated\PieceImages\general_of_the_army.bmp" />
+    <Content Include="GameRelated\PieceImages\lieutenant_colonel.bmp" />
+    <Content Include="GameRelated\PieceImages\lieutenant_general.bmp" />
+    <Content Include="GameRelated\PieceImages\major.bmp" />
+    <Content Include="GameRelated\PieceImages\major_general.bmp" />
+    <Content Include="GameRelated\PieceImages\private.bmp" />
+    <Content Include="GameRelated\PieceImages\second_lieutenant.bmp" />
+    <Content Include="GameRelated\PieceImages\sergeant.bmp" />
+    <Content Include="GameRelated\PieceImages\spy.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

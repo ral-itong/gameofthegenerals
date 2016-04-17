@@ -87,7 +87,7 @@ namespace GameOfTheGeneralsUnitTests
         public void MessageLengthOfBoardState_ShouldEqualTheLengthOfSerializedBoardState()
         {
             BoardStateMessage boardState = GetBoardStateMessage();
-            byte[] result = BoardStateMessage.ToByteArray(boardState);
+            byte[] result = BoardStateMessage.Serialize(boardState);
 
             Header header = ExtractHeaderFromByteArray(result);
 
@@ -98,7 +98,7 @@ namespace GameOfTheGeneralsUnitTests
         public void WhenBoardStateIsDeserialized_TurnNumberAndPiecesShouldBeTheSame()
         {
             BoardStateMessage boardState = GetBoardStateMessage();
-            byte[] result = BoardStateMessage.ToByteArray(boardState);
+            byte[] result = BoardStateMessage.Serialize(boardState);
 
             BoardStateMessage deserializedBoardState = BoardStateMessage.Deserialize(result);
 
@@ -111,7 +111,7 @@ namespace GameOfTheGeneralsUnitTests
         public void MessageLengthOfReadyMessage_ShouldEqualLengthOfSerializedReadyMessage()
         {
             ReadyMessage boardState = GetReadyMessage();
-            byte[] result = BoardStateMessage.ToByteArray(boardState);
+            byte[] result = BoardStateMessage.Serialize(boardState);
 
             Header header = ExtractHeaderFromByteArray(result);
 
@@ -122,7 +122,7 @@ namespace GameOfTheGeneralsUnitTests
         public void ReadyMessageWhenSerialized_ShouldHaveReadyAsItsMessageType()
         {
             ReadyMessage boardState = GetReadyMessage();
-            byte[] result = BoardStateMessage.ToByteArray(boardState);
+            byte[] result = BoardStateMessage.Serialize(boardState);
 
             Header header = ExtractHeaderFromByteArray(result);
 

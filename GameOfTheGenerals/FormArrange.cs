@@ -15,5 +15,10 @@ namespace GameOfTheGenerals
         {
             InitializeComponent();
         }
+
+        private void GameOfTheGeneralsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
